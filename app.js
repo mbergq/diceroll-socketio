@@ -40,6 +40,11 @@ io.on('connection', (socket) => {
     newMessage.save();
   });
 
+  socket.on('diceroll', (data) => {
+    console.log(data);
+    io.emit('dicerollData', data.user + ' : ' + data.diceSum);
+  });
+
   socket.on('disconnect', () => {
     console.log(`Client ${socket.id} disconnected!`);
   });

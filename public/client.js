@@ -7,6 +7,9 @@ const formMessage = document.querySelector('#formMessage');
 const inputMessage = document.querySelector('#inputMessage');
 const userContianer = document.querySelector('#userContainer');
 
+const rollDice = document.querySelector('#rollDice');
+const diceRolls = document.querySelector('#diceRolls');
+
 let myUser;
 
 formUser.addEventListener('submit', function (e) {
@@ -17,7 +20,7 @@ formUser.addEventListener('submit', function (e) {
   document.querySelector('#message').style.display = 'block';
 });
 
-formMessage.addEventListener('submit', function (e) {
+formMessage.addEventListener('submit', (e) => {
   e.preventDefault();
   if (inputMessage.value) {
     socket.emit('chatMessage', { user: myUser, message: inputMessage.value });
@@ -25,8 +28,20 @@ formMessage.addEventListener('submit', function (e) {
   }
 });
 
-socket.on('newChatMessage', function (msg) {
+rollDice.addEventListener('click', () => {
+  let randDice = Math.floor(Math.random() * 6 + 1);
+  console.log(randDice);
+  socket.emit('diceroll', { user: myUser, diceSum: randDice });
+});
+
+socket.on('newChatMessage', (msg) => {
   let item = document.createElement('li');
   item.textContent = msg;
   messages.appendChild(item);
+});
+
+socket.on('dicerollData', (data) => {
+  let diceroll = document.createElement('li');
+  diceroll.textContent = data;
+  diceRolls.appendChild(diceroll);
 });
