@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+  </head>
+  <body>
+    <h1>Dice rolls</h1>
+    <div id="userContainer"></div>
+    <div id="user">
+      <form id="formUser">
+        <input type="text" id="inputUser"><button>Enter your name</button>
+      </form>
+    </div>
+    <div id="message">
+    <form id="formMessage">
+      <input type="text" id="inputMessage"><button>Send message</button>
+    </form>
+    </div>
+    <h2>Chat messages</h2>
+    <ul id="messages"></ul>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+  </body>
+</html>
