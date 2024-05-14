@@ -20,6 +20,7 @@ formUser.addEventListener('submit', function (e) {
   document.querySelector('#message').style.display = 'block';
 });
 
+//Send to server
 formMessage.addEventListener('submit', (e) => {
   e.preventDefault();
   if (inputMessage.value) {
@@ -27,13 +28,19 @@ formMessage.addEventListener('submit', (e) => {
     inputMessage.value = '';
   }
 });
-
+let totalSum = 0;
 rollDice.addEventListener('click', () => {
   let randDice = Math.floor(Math.random() * 6 + 1);
-  console.log(randDice);
-  socket.emit('diceroll', { user: myUser, diceSum: randDice });
+  function countTotal() {
+    totalSum = totalSum + randDice;
+  }
+  countTotal();
+  console.log('Rolled:' + randDice);
+  console.log('Total: ' + totalSum);
+  socket.emit('diceroll', { user: myUser, diceSum: randDice, total: totalSum });
 });
 
+//On response coming from server
 socket.on('newChatMessage', (msg) => {
   let item = document.createElement('li');
   item.textContent = msg;

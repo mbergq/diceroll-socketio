@@ -42,7 +42,10 @@ io.on('connection', (socket) => {
 
   socket.on('diceroll', (data) => {
     console.log(data);
-    io.emit('dicerollData', data.user + ' : ' + data.diceSum);
+    io.emit(
+      'dicerollData',
+      data.user + ': ' + data.diceSum + ' Total: ' + data.total
+    );
   });
 
   socket.on('disconnect', () => {
