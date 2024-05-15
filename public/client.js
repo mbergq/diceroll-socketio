@@ -6,18 +6,24 @@ const messages = document.querySelector('#messages');
 const formMessage = document.querySelector('#formMessage');
 const inputMessage = document.querySelector('#inputMessage');
 const userContianer = document.querySelector('#userContainer');
+const sendMsgBtn = document.querySelector('#sendMsgBtn');
 
 const rollDice = document.querySelector('#rollDice');
 const diceRolls = document.querySelector('#diceRolls');
 
 let myUser;
-
+inputMessage.style.display = 'none';
+sendMsgBtn.style.display = 'none';
+rollDice.style.display = 'none';
 formUser.addEventListener('submit', function (e) {
   e.preventDefault();
   myUser = inputUser.value;
   userContianer.innerHTML = '<h2>Welcome ' + myUser + '</h2>';
   document.querySelector('#user').style.display = 'none';
   document.querySelector('#message').style.display = 'block';
+  inputMessage.style.display = 'block';
+  sendMsgBtn.style.display = 'block';
+  rollDice.style.display = 'block';
 });
 
 //Send to server
