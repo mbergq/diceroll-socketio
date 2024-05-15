@@ -7,6 +7,7 @@ const io = new Server(server);
 const port = 3000;
 
 const MessageModel = require('./models/messageModel');
+const dicerollModel = require('./models/dicerollModel');
 
 const connectionMongoDB = require('./connectionMongoDB');
 connectionMongoDB();
@@ -24,6 +25,17 @@ app.get('/messages', async (req, res) => {
   }
 });
 
+app.get('/dicerolls', async (req, res) => {
+  try {
+    const allDicerolls = await dicerollModel.find();
+    return res.status(200).json(allDicerolls);
+  } catch (error) {
+    return res.status(500).json({
+      error: error.message,
+    });
+  }
+});
+
 io.on('connection', (socket) => {
   console.log(`A client with id ${socket.id} connected to the chat!`);
 
@@ -34,8 +46,8 @@ io.on('connection', (socket) => {
     let message = msg.message;
 
     const newMessage = new MessageModel({
-      message: message,
       user: user,
+      message: message,
     });
     newMessage.save();
   });
@@ -46,6 +58,17 @@ io.on('connection', (socket) => {
       'dicerollData',
       data.user + ': ' + data.diceSum + ' Total: ' + data.total
     );
+
+    let user = data.user;
+    let diceroll = data.diceSum;
+    let total = data.total;
+
+    const newDiceroll = new dicerollModel({
+      user: user,
+      diceroll: diceroll,
+      dicerollSum: total,
+    });
+    newDiceroll.save();
   });
 
   socket.on('disconnect', () => {
