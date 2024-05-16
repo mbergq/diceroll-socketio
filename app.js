@@ -13,7 +13,7 @@ const connectionMongoDB = require('./connectionMongoDB');
 connectionMongoDB();
 
 app.use(express.static('public'));
-
+//Endpoint to see all messages
 app.get('/messages', async (req, res) => {
   try {
     const allMessages = await MessageModel.find();
@@ -24,7 +24,7 @@ app.get('/messages', async (req, res) => {
     });
   }
 });
-
+//Endpoint showing all dicerolls
 app.get('/dicerolls', async (req, res) => {
   try {
     const allDicerolls = await dicerollModel.find();
@@ -53,7 +53,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('diceroll', (data) => {
-    console.log(data);
     io.emit(
       'dicerollData',
       data.user + ': ' + data.diceSum + ' Total: ' + data.total

@@ -7,20 +7,23 @@ const formMessage = document.querySelector('#formMessage');
 const inputMessage = document.querySelector('#inputMessage');
 const userContianer = document.querySelector('#userContainer');
 const sendMsgBtn = document.querySelector('#sendMsgBtn');
-
 const rollDice = document.querySelector('#rollDice');
 const diceRolls = document.querySelector('#diceRolls');
 
 let myUser;
+
+//Hide elements
 inputMessage.style.display = 'none';
 sendMsgBtn.style.display = 'none';
 rollDice.style.display = 'none';
+
 formUser.addEventListener('submit', function (e) {
   e.preventDefault();
   myUser = inputUser.value;
   userContianer.innerHTML = '<h2>Welcome ' + myUser + '</h2>';
   document.querySelector('#user').style.display = 'none';
   document.querySelector('#message').style.display = 'block';
+  //Show elements once user has entered a name
   inputMessage.style.display = 'block';
   sendMsgBtn.style.display = 'block';
   rollDice.style.display = 'block';
@@ -34,15 +37,15 @@ formMessage.addEventListener('submit', (e) => {
     inputMessage.value = '';
   }
 });
+
 let totalSum = 0;
+
 rollDice.addEventListener('click', () => {
   let randDice = Math.floor(Math.random() * 6 + 1);
   function countTotal() {
     totalSum = totalSum + randDice;
   }
   countTotal();
-  console.log('Rolled:' + randDice);
-  console.log('Total: ' + totalSum);
   socket.emit('diceroll', { user: myUser, diceSum: randDice, total: totalSum });
 });
 
